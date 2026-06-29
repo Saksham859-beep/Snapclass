@@ -66,17 +66,11 @@ def student_dashboard():
 
 
         stats = stats_map.get(sid,{"total":0, "attended": 0} )
-        def unenroll_button(sid=sid, subject_name=sub["name"]):
-          if st.button(
-            "Unenroll from this course",
-            key=f"unenroll_{sid}",
-            type="tertiary",
-            width="stretch",
-            icon=":material/delete_forever:"
-         ):
-            unenroll_student_to_subject(student_id, sid)
-            st.toast(f"Unenrolled from {subject_name} successfully!")
-            st.rerun()
+        def unenroll_button():
+                if st.button("Unenroll from tihs course", type='tertiary', width='stretch', icon=':material/delete_forever:'):
+                    unenroll_student_to_subject(student_id, sid)
+                    st.toast(f'Unenrolled from {sub['name']} successfully!')
+                    st.rerun()
 
         with cols[i % 2]:
 
@@ -172,7 +166,8 @@ def student_screen():
                             voice_emb = None
                             if audio_data:
                                 voice_emb = get_voice_embedding(audio_data.read())
-                               response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
+
+                            response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
 
                             if response_data:
                                 train_classifier()
@@ -185,7 +180,7 @@ def student_screen():
                         else:
                             st.error('Couldnt capture your facial features for registration')
 
-                  else:
+                else:
                     st.warning('Please enter your name!')
 
 
