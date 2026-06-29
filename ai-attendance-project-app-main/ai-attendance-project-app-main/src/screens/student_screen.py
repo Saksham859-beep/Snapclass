@@ -170,8 +170,20 @@ def student_screen():
                             face_emb = encodings[0].tolist()
 
                             voice_emb = None
-                            if audio_data:
-                                voice_emb = get_voice_embedding(audio_data.read())
+
+                    if audio_data:
+                            st.success("Audio received!")
+
+                            voice_emb = get_voice_embedding(audio_data.read())
+
+                            st.write("Voice Embedding:", voice_emb)
+
+                            if voice_emb is None:
+                            st.error("Embedding generation failed!")
+                            else:
+                            st.success(f"Embedding generated successfully. Length = {len(voice_emb)}")
+                            else:
+                            st.warning("No audio received!")
 
                             response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
 
@@ -186,7 +198,7 @@ def student_screen():
                         else:
                             st.error('Couldnt capture your facial features for registration')
 
-                else:
+                  else:
                     st.warning('Please enter your name!')
 
 
